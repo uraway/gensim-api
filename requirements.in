@@ -1,0 +1,7 @@
+gensim==0.9.1
+numpy
+scipy
+falcon
+gunicorn
+gevent
+boto
