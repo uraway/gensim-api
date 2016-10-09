@@ -113,9 +113,9 @@ print model.similarity(argvs[1], argvs[2])
 
 ### APIとして使う
 
-ほかのプログラミング言語から使用しやすいように、学習モデルをHerokuサーバーにあげて、APIとして使えるようにしてみます。
+ほかのプログラミング言語から使用しやすいように、APIとして使えるようにしてみます。
 
-フレームワークには[Falcon](https://falconframework.org/)を使用、WSGIサーバーのgunicornをインストールします。
+フレームワークには[Falcon](https://falconframework.org/)を使用、WSGIサーバーのgunicornも一緒にインストールします。
 
     $ pip install falcon gunicorn
 
@@ -133,9 +133,7 @@ class Server(object):
 
     def __init__(self):
         self.logger = logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-        print "loading model"
         self.model = word2vec.Word2Vec.load("jawiki_wakati.model")
-        print "finish"
 
     def on_get(self, req, res):
 
@@ -161,29 +159,53 @@ app.add_route("/", Server())
     $ curl "127.0.0.1:8000?s1=日本&s2=フィリピン"
     {"similarity": 0.26251150426566316}
 
-で、これをHerokuにあげてみます:
+### Docker
 
-`Procfile`
+デプロイしやすいようにDockerで動かしてみます。
+
+現在の環境はこれ:
+![](http://i.imgur.com/PcqxvKz.png)
+
+Dockerファイルを追加:
+
+`Dockerfile`
 ```
-web: gunicorn server:app
+FROM python:2.7.9
+
+RUN pip install --upgrade pip
+
+WORKDIR /gensim-api
+COPY requirements.txt /gensim-api
+RUN  pip install -r requirements.txt
+COPY . /gensim-api
 ```
 
-    $ git init
-    $ heroku apps:create gensim
-    $ pip freeze > requirements.txt
-    $ git add .
-    $ git commit -m ":tada: initial commit"
-    $ git push heroku master
+管理が楽なのでDocker Composeを使用:
 
-アップロードが完了したら、次のようにリクエスト:
+`docker-compose.yml`
+```
+api:
+    image: gensim-api
+    command: gunicorn --reload -b 0.0.0.0:5000 server:app
+    volumes:
+        - .:/gensim-api
+    ports:
+        - "5000:5000"
+```
 
-    $ curl "https://gensim.herokuapp.com?s1=日本&s2=フィリピン"
+次のコマンドでDockerイメージを作成し、コンテナを起動します:
+```
+docker build -t gensim-api .
+docker-compose up
+```
 
 ### 最後に
 
 上記のように、gensimを使えば簡単に単語の類似度が算出できることが分かりました。学習データの準備さえ乗り越えれば、あとはどうってことないと思います。
 
 ソースコードはこちら:
+
+<https://github.com/uraway/gensim-api>
 
 今のところ、学習量は100MBなんですが、続けて学習させることも可能っぽいので、適度に更新しておきます。
 
