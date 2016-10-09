@@ -53,11 +53,11 @@ Mecabの -d オプションにこのパスを指定して、分かち書きを�
 
 ### word2vecの実装
 
-    参考
-    - https://radimrehurek.com/gensim/models/word2vec.html
-    - http://rare-technologies.com/word2vec-tutorial/
-    - http://tjo.hatenablog.com/entry/2014/06/19/233949
-    - http://sucrose.hatenablog.com/entry/2013/10/29/001041
+参考
+- <https://radimrehurek.com/gensim/models/word2vec.html>
+- <http://rare-technologies.com/word2vec-tutorial/>
+- <http://tjo.hatenablog.com/entry/2014/06/19/233949>
+- <http://sucrose.hatenablog.com/entry/2013/10/29/001041>
 
 Pythonの[gensim](https://radimrehurek.com/gensim/index.html)を使って、word2vecを使用します。cythonを入れると学習時間が短縮されるみたいです。
 
