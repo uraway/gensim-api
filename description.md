@@ -1,3 +1,6 @@
+<!--
+{"id":"10328749687188600417","title":"単語をベクトル化するword2vec(gensim)を使い、指定した二単語間の関連度を算出する","categories":["Python","機械学習"],"draft":false}
+-->
 # 単語をベクトル化するword2vec(gensim)を使い、指定した二単語間の関連度を算出する
 
 ## word2vec
@@ -24,7 +27,7 @@ xmlファイルのままでは使えないので、
 
     $ cat jawiki-latest-pages-articles.xml-* > jawiki.txt
 
-word2vecでは、単語ごとにスペースで区切られている必要があるので、日本語形態素解析器であるMecabを使って分かち書きします。
+word2vecでは、単語ごとにスペースで区切られている必要があるので、日本語形態素解析器である[Mecab](http://taku910.github.io/mecab/)を使って分かち書きします。
 
 まずは、Mecabと標準辞書(IPA)をインストールします:
 
@@ -51,12 +54,12 @@ Mecabの -d オプションにこのパスを指定して、分かち書きを�
 ### word2vecの実装
 
     参考
-    - <https://radimrehurek.com/gensim/models/word2vec.html>
-    - <http://rare-technologies.com/word2vec-tutorial/>
-    - <http://tjo.hatenablog.com/entry/2014/06/19/233949>
-    - <http://sucrose.hatenablog.com/entry/2013/10/29/001041>
+    - https://radimrehurek.com/gensim/models/word2vec.html
+    - http://rare-technologies.com/word2vec-tutorial/
+    - http://tjo.hatenablog.com/entry/2014/06/19/233949
+    - http://sucrose.hatenablog.com/entry/2013/10/29/001041
 
-Pythonのgensimを使って、word2vecを使用します。cythonを入れると学習時間が短縮されるみたいです。
+Pythonの[gensim](https://radimrehurek.com/gensim/index.html)を使って、word2vecを使用します。cythonを入れると学習時間が短縮されるみたいです。
 
     $ easy_install gensim numpy scipy
     $ pip install cython
@@ -195,8 +198,8 @@ api:
 
 次のコマンドでDockerイメージを作成し、コンテナを起動します:
 ```
-docker build -t gensim-api .
-docker-compose up
+$ docker build -t gensim-api .
+$ docker-compose up
 ```
 
 ### 最後に
