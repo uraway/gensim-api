@@ -1,0 +1,7 @@
+api:
+    image: gensim-api
+    command: gunicorn --reload -b 0.0.0.0:5000 server:app
+    volumes:
+        - .:/gensim-api
+    ports:
+        - "5000:5000"
