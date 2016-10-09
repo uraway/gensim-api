@@ -3,3 +3,4 @@ txt/
 .DS_Store
 *.zip
 .envrc
+server.pyc
